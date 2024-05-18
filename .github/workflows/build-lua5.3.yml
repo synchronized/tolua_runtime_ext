@@ -1,0 +1,79 @@
+name: Build tolua runtime 5.3
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-linux-x64:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up tool chain
+        run: |
+          sudo apt-get install -y gcc make libreadline-dev
+
+      - name: Build Linux x64
+        run: build/build_lua53_linux_linux_x64.sh
+
+      - name: Archive Output
+        uses: actions/upload-artifact@v3
+        with:
+          name: output
+          path: output
+
+  build-android-arm64:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up NDK
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r26d
+          local-cache: true
+
+      - name: Build Android arm64
+        run: build/build_lua53_linux_android_arm64.sh
+
+      - name: Archive Output
+        uses: actions/upload-artifact@v3
+        with:
+          name: output
+          path: output
+
+  build-windows-x64:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up tool chain
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+          iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+          scoop install make
+          scoop install gcc
+
+      - name: Build Windows x64
+        shell: bash
+        run: build/build_lua53_mingw_windows_x64.sh
+
+      - name: Archive Output
+        uses: actions/upload-artifact@v3
+        with:
+          name: output
+          path: output
+  
