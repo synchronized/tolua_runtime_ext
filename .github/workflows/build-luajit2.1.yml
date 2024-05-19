@@ -1,0 +1,88 @@
+name: Build tolua runtime luajit2.1
+
+on:
+  workflow_dispatch:
+
+env:
+  APPLICATION_NAME: tolua
+  LUA_VERSION_NAME: luagit21
+
+jobs:
+  build-windows-x64:
+    runs-on: windows-latest
+
+    env:
+      ARTIFACT_NAME: ${{env.APPLICATION_NAME}}-${{env.LUA_VERSION_NAME}}-${{github.job}}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up tool chain
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+          iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+          scoop install make
+          scoop install gcc
+
+      - name: Build Windows x64
+        shell: bash
+        run: build/build_luajit2.1_mingw_windows_x64.sh
+
+      - name: Archive Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.ARTIFACT_NAME}}
+          path: output
+
+  build-linux-x64:
+    runs-on: ubuntu-22.04
+
+    env:
+      ARTIFACT_NAME: ${{env.APPLICATION_NAME}}-${{env.LUA_VERSION_NAME}}-${{github.job}}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up tool chain
+        run: |
+          sudo apt-get install -y gcc make libreadline-dev
+
+      - name: Build Linux x64
+        run: build/build_luajit21_linux_linux_x64.sh
+
+      - name: Archive Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.ARTIFACT_NAME}}
+          path: output
+
+  
+  release-artifact:
+    runs-on: ubuntu-22.04
+    needs: [ build-windows-x64, build-linux-x64 ]
+
+    steps:
+      - name: Downloads windows artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{jobs.build-windows-x64.env.ARTIFACT_NAME}}
+          path: output
+
+      - name: Downloads linux artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{jobs.build-windows-x64.env.ARTIFACT_NAME}}
+          path: output
+
+      - name: Archive Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.APPLICATION_NAME}}-${{env.LUA_VERSION_NAME}}
+          path: output
