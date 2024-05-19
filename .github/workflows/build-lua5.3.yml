@@ -3,9 +3,15 @@ name: Build tolua runtime 5.3
 on:
   workflow_dispatch:
 
+env:
+  APPLICATION_NAME: tolua
+  LUA_VERSION_NAME: lua53
+
 jobs:
-  build-windows-x64:
+  build_windows_x64:
     runs-on: windows-latest
+    env:
+      ARTIFACT_NAME: tolua-lua53-${{github.job}}
 
     steps:
       - name: Checkout repository
@@ -28,11 +34,16 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: tolua-${{github.job}}
+          name: ${{env.ARTIFACT_NAME}}
           path: output
 
-  build-linux-x64:
+    outputs:
+      artifact_name: ${{env.ARTIFACT_NAME}}
+
+  build_linux_x64:
     runs-on: ubuntu-22.04
+    env:
+      ARTIFACT_NAME: tolua-lua53-${{github.job}}
 
     steps:
       - name: Checkout repository
@@ -50,11 +61,16 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: tolua-${{github.job}}
+          name: ${{env.ARTIFACT_NAME}}
           path: output
 
-  build-android-arm64:
+    outputs:
+      artifact_name: ${{env.ARTIFACT_NAME}}
+
+  build_android_arm64:
     runs-on: ubuntu-22.04
+    env:
+      ARTIFACT_NAME: tolua-lua53-${{github.job}}
 
     steps:
       - name: Checkout repository
@@ -73,31 +89,33 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: tolua-${{github.job}}
+          name: ${{env.ARTIFACT_NAME}}
           path: output
 
+    outputs:
+      artifact_name: ${{env.ARTIFACT_NAME}}
   
   release-artifact:
     runs-on: ubuntu-22.04
-    needs: [ build-windows-x64, build-linux-x64, build-android-arm64 ]
+    needs: [ build_windows_x64, build_linux_x64, build_android_arm64 ]
 
     steps:
       - name: Downloads windows artifact
         uses: actions/download-artifact@v4
         with:
-          name: tolua-build-windows-x64
+          name: ${{ needs.build_windows_x64.outputs.artifact_name }}
           path: output
 
       - name: Downloads linux artifact
         uses: actions/download-artifact@v4
         with:
-          name: tolua-build-linux-x64
+          name: ${{ needs.build_windows_x64.outputs.artifact_name }}
           path: output
 
       - name: Downloads android artifact
         uses: actions/download-artifact@v4
         with:
-          name: tolua-build-android-arm64
+          name: ${{ needs.build_android_x64.outputs.artifact_name }}
           path: output
 
       - name: Archive Output
