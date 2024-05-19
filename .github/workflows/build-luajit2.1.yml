@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      ARTIFACT_NAME: ${{APPLICATION_NAME}}-${{LUA_VERSION_NAME}}-${{github.job}}
+      ARTIFACT_NAME: ${{ env.APPLICATION_NAME }}-${{ env.LUA_VERSION_NAME }}-${{github.job}}
 
     steps:
       - name: Checkout repository
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     env:
-      ARTIFACT_NAME: ${{APPLICATION_NAME}}-${{LUA_VERSION_NAME}}-${{github.job}}
+      ARTIFACT_NAME: ${{ env.APPLICATION_NAME }}-${{ env.LUA_VERSION_NAME }}-${{github.job}}
 
     steps:
       - name: Checkout repository
