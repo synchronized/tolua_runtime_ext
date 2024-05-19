@@ -58,7 +58,7 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ARTIFACT_NAME}}
+          name: ${{env.ARTIFACT_NAME}}
           path: output
 
   
@@ -82,5 +82,5 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: ${{APPLICATION_NAME}}-${{LUA_VERSION_NAME}}
+          name: ${{env.APPLICATION_NAME}}-${{env.LUA_VERSION_NAME}}
           path: output
