@@ -23,8 +23,8 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: output/lua53/linux
-          path: output/lua53/linux
+          name: tolua-${{github.job}}
+          path: output
 
   build-android-arm64:
     runs-on: ubuntu-22.04
@@ -46,8 +46,8 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: output/lua53/android
-          path: output/lua53/android
+          name: tolua-${{github.job}}
+          path: output
 
   build-windows-x64:
     runs-on: windows-latest
@@ -73,6 +73,6 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: output/lua53/windows
-          path: output/lua53/windows
+          name: tolua-${{github.job}}
+          path: output
   

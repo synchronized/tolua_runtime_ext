@@ -3,7 +3,7 @@
 
 CURR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_DIR=$(dirname ${CURR_DIR})
-OUTPUT_DIR="output/lua53/window/x86_64"
+OUTPUT_DIR="output/lua53/windows/x86_64"
 
 LUA_DIR="3rd/lua53"
 LUA_PATH=${LUA_DIR}
