@@ -23,8 +23,8 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: output
-          path: output
+          name: output/lua53/linux
+          path: output/lua53/linux
 
   build-android-arm64:
     runs-on: ubuntu-22.04
@@ -39,7 +39,6 @@ jobs:
         uses: nttld/setup-ndk@v1
         with:
           ndk-version: r26d
-          local-cache: true
 
       - name: Build Android arm64
         run: build/build_lua53_linux_android_arm64.sh
@@ -47,8 +46,8 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: output
-          path: output
+          name: output/lua53/android
+          path: output/lua53/android
 
   build-windows-x64:
     runs-on: windows-latest
@@ -74,6 +73,6 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: output
-          path: output
+          name: output/lua53/windows
+          path: output/lua53/windows
   
