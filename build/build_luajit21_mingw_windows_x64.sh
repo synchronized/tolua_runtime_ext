@@ -27,7 +27,6 @@ gcc -m64 -O2 -std=gnu99 -shared \
     src/tolua.c \
     src/int64.c \
     src/uint64.c \
-    src/pb.c \
     src/struct.c \
     3rd/lpeg/lpcap.c \
     3rd/lpeg/lpcode.c \
@@ -55,12 +54,14 @@ gcc -m64 -O2 -std=gnu99 -shared \
     3rd/sproto/lsproto.c \
     3rd/skynet/crypt/lsha1.c \
     3rd/skynet/crypt/lua-crypt.c \
+    3rd/lua-protobuf/pb.c \
     -o ${OUTPUT_DIR}/tolua.dll \
     -Isrc/ \
     -I${LUA_PATH}/src \
     -I3rd/cjson \
     -I3rd/luasocket \
     -I3rd/lpeg \
+    -I3rd/lua-protobuf \
     -lws2_32 \
     -Wl,--whole-archive ${OUTPUT_DIR}/${LUA_LIBNAME}.a \
     -Wl,--no-whole-archive -static-libgcc -static-libstdc++

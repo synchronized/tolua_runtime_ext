@@ -29,7 +29,6 @@ gcc -m64 -O2 -std=gnu99 -shared \
     src/tolua.c \
     src/int64.c \
     src/uint64.c \
-    src/pb.c \
     src/struct.c \
     3rd/lpeg/lpcap.c \
     3rd/lpeg/lpcode.c \
@@ -57,6 +56,7 @@ gcc -m64 -O2 -std=gnu99 -shared \
     3rd/sproto/lsproto.c \
     3rd/skynet/crypt/lsha1.c \
     3rd/skynet/crypt/lua-crypt.c \
+    3rd/lua-protobuf/pb.c \
     -fPIC\
     -o ${OUTPUT_DIR}/libtolua.so \
     -Isrc/ \
@@ -64,11 +64,12 @@ gcc -m64 -O2 -std=gnu99 -shared \
     -I3rd/cjson \
     -I3rd/luasocket \
     -I3rd/lpeg \
+    -I3rd/lua-protobuf \
     -Wl,--whole-archive ${OUTPUT_DIR}/${LUA_LIBNAME}.a \
     -Wl,--no-whole-archive -static-libgcc -static-libstdc++
 
 if [ "$?" = "0" ]; then
-	echo -e "\n[MAINTAINCE] build libtolua.so success"
+    echo -e "\n[MAINTAINCE] build libtolua.so success"
 else
-	echo -e "\n[MAINTAINCE] build libtolua.so failed"
+    echo -e "\n[MAINTAINCE] build libtolua.so failed"
 fi

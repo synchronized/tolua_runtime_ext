@@ -28,7 +28,7 @@ cd ${PROJECT_DIR}/${LUA_PATH}/src
 make clean        
 make HOST_CC="gcc -m64" CROSS=$NDKP TARGET_FLAGS="$NDKF $NDKARCH" TARGET_SYS=Linux TARGET_SHLDFLAGS="--sysroot $NDK_SYSROOT_LINK"  TARGET_LDFLAGS="--sysroot $NDK_SYSROOT_LINK" TARGET_CFLAGS="--sysroot $NDK_SYSROOT_BUILD"
 cp ./${LUA_LIBNAME}.a ${PROJECT_DIR}/${LUA_LINKPATH}/jni/
-make clean    	
+make clean
 
 # compile the tolua
 cd ${PROJECT_DIR}/${LUA_LINKPATH}

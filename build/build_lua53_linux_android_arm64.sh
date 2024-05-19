@@ -20,7 +20,7 @@ cd ${PROJECT_DIR}/${LUA_PATH}/src
 ndk-build clean APP_ABI="arm64-v8a" APP_PLATFORM=android-$NDKABI
 ndk-build APP_ABI="arm64-v8a" APP_PLATFORM=android-$NDKABI
 cp obj/local/arm64-v8a/${LUA_LIBNAME}.a ${PROJECT_DIR}/${LUA_LINKPATH}/jni/
-ndk-build clean APP_ABI="arm64-v8a" APP_PLATFORM=android-$NDKABI        	        
+ndk-build clean APP_ABI="arm64-v8a" APP_PLATFORM=android-$NDKABI
 
 # compile the tolua
 cd ${PROJECT_DIR}/${LUA_LINKPATH}
