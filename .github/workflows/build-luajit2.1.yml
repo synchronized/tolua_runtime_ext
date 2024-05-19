@@ -8,7 +8,7 @@ env:
   LUA_VERSION_NAME: luajit21
 
 jobs:
-  build-windows-x64:
+  build_windows_x64:
     runs-on: windows-latest
     env:
       ARTIFACT_NAME: tolua-luajit21-${{github.job}}
@@ -37,7 +37,7 @@ jobs:
           name: ${{env.ARTIFACT_NAME}}
           path: output
 
-  build-linux-x64:
+  build_linux_x64:
     runs-on: ubuntu-22.04
     env:
       ARTIFACT_NAME: tolua-luajit21-${{github.job}}
@@ -62,21 +62,21 @@ jobs:
           path: output
 
   
-  release-artifact:
+  release_artifact:
     runs-on: ubuntu-22.04
-    needs: [ build-windows-x64, build-linux-x64 ]
+    needs: [ build_windows_x64, build_linux_x64 ]
 
     steps:
       - name: Downloads windows artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{jobs.build-windows-x64.env.ARTIFACT_NAME}}
+          name: ${{jobs.build_windows_x64.env.ARTIFACT_NAME}}
           path: output
 
       - name: Downloads linux artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{jobs.build-windows-x64.env.ARTIFACT_NAME}}
+          name: ${{jobs.build_linux_x64.env.ARTIFACT_NAME}}
           path: output
 
       - name: Archive Output
