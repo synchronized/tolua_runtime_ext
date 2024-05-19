@@ -43,6 +43,10 @@ LOCAL_SRC_FILES :=	$(LOCAL_TO_PROJECT)/src/tolua.c \
 					$(LOCAL_TO_PROJECT)/3rd/luasocket/udp.c \
 					$(LOCAL_TO_PROJECT)/3rd/luasocket/usocket.c \
 					$(LOCAL_TO_PROJECT)/3rd/luasocket/compat.c \
+    				$(LOCAL_TO_PROJECT)/3rd/sproto/sproto.c \
+    				$(LOCAL_TO_PROJECT)/3rd/sproto/lsproto.c \
+    				$(LOCAL_TO_PROJECT)/3rd/skynet/crypt/lsha1.c \
+    				$(LOCAL_TO_PROJECT)/3rd/skynet/crypt/lua-crypt.c \
 					
 LOCAL_WHOLE_STATIC_LIBRARIES += libluajit
 include $(BUILD_SHARED_LIBRARY)

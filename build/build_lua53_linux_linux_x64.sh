@@ -53,6 +53,10 @@ gcc -m64 -O2 -std=gnu99 -shared \
     3rd/luasocket/udp.c \
     3rd/luasocket/usocket.c \
     3rd/luasocket/compat.c \
+    3rd/sproto/sproto.c \
+    3rd/sproto/lsproto.c \
+    3rd/skynet/crypt/lsha1.c \
+    3rd/skynet/crypt/lua-crypt.c \
     -fPIC\
     -o ${OUTPUT_DIR}/libtolua.so \
     -Isrc/ \
