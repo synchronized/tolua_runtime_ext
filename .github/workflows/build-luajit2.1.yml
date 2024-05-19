@@ -37,6 +37,9 @@ jobs:
           name: ${{env.ARTIFACT_NAME}}
           path: output
 
+    outputs:
+      artifact_name: ${{env.ARTIFACT_NAME}}
+
   build_linux_x64:
     runs-on: ubuntu-22.04
     env:
@@ -61,6 +64,9 @@ jobs:
           name: ${{env.ARTIFACT_NAME}}
           path: output
 
+    outputs:
+      artifact_name: ${{env.ARTIFACT_NAME}}
+
   
   release_artifact:
     runs-on: ubuntu-22.04
@@ -70,13 +76,13 @@ jobs:
       - name: Downloads windows artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{jobs.build_windows_x64.env.ARTIFACT_NAME}}
+          name: ${{ jobs.build_windows_x64.outputs.artifact_name }}
           path: output
 
       - name: Downloads linux artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{jobs.build_linux_x64.env.ARTIFACT_NAME}}
+          name: ${{ jobs.build_windows_x64.outputs.artifact_name }}
           path: output
 
       - name: Archive Output
