@@ -4,6 +4,33 @@ on:
   workflow_dispatch:
 
 jobs:
+  build-windows-x64:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up tool chain
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+          iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+          scoop install make
+          scoop install gcc
+
+      - name: Build Windows x64
+        shell: bash
+        run: build/build_lua53_mingw_windows_x64.sh
+
+      - name: Archive Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: tolua-${{github.job}}
+          path: output
+
   build-linux-x64:
     runs-on: ubuntu-22.04
 
@@ -49,30 +76,35 @@ jobs:
           name: tolua-${{github.job}}
           path: output
 
-  build-windows-x64:
-    runs-on: windows-latest
+  
+  release-artifact:
+    runs-on: ubuntu-22.04
+    needs: |
+      build-windows-x64
+      build-linux-x64
+      build-android-arm64
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Downloads windows artifact
+        uses: actions/download-artifact@v4
         with:
-          submodules: true
+          name: tolua-build-windows-x64
+          path: output
 
-      - name: Set up tool chain
-        shell: pwsh
-        run: |
-          Set-ExecutionPolicy RemoteSigned -scope CurrentUser
-          iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-          scoop install make
-          scoop install gcc
+      - name: Downloads linux artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: tolua-build-linux-x64
+          path: output
 
-      - name: Build Windows x64
-        shell: bash
-        run: build/build_lua53_mingw_windows_x64.sh
+      - name: Downloads android artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: tolua-build-android-arm64
+          path: output
 
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: tolua-${{github.job}}
+          name: tolua-lua5.3
           path: output
-  
