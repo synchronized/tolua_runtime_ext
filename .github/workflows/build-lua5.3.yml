@@ -79,10 +79,7 @@ jobs:
   
   release-artifact:
     runs-on: ubuntu-22.04
-    needs: |
-      build-windows-x64
-      build-linux-x64
-      build-android-arm64
+    needs: [ build-windows-x64, build-linux-x64, build-android-arm64 ]
 
     steps:
       - name: Downloads windows artifact
