@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      ARTIFACT_NAME: ${{env.APPLICATION_NAME}}-${{env.LUA_VERSION_NAME}}-${{github.job}}
+      ARTIFACT_NAME: ${{APPLICATION_NAME}}-${{LUA_VERSION_NAME}}-${{github.job}}
 
     steps:
       - name: Checkout repository
@@ -35,14 +35,14 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: ${{env.ARTIFACT_NAME}}
+          name: ${{ARTIFACT_NAME}}
           path: output
 
   build-linux-x64:
     runs-on: ubuntu-22.04
 
     env:
-      ARTIFACT_NAME: ${{env.APPLICATION_NAME}}-${{env.LUA_VERSION_NAME}}-${{github.job}}
+      ARTIFACT_NAME: ${{APPLICATION_NAME}}-${{LUA_VERSION_NAME}}-${{github.job}}
 
     steps:
       - name: Checkout repository
@@ -60,7 +60,7 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: ${{env.ARTIFACT_NAME}}
+          name: ${{ARTIFACT_NAME}}
           path: output
 
   
@@ -84,5 +84,5 @@ jobs:
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: ${{env.APPLICATION_NAME}}-${{env.LUA_VERSION_NAME}}
+          name: ${{APPLICATION_NAME}}-${{LUA_VERSION_NAME}}
           path: output
