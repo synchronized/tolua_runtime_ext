@@ -4,14 +4,13 @@ on:
   workflow_dispatch:
 
 env:
-  APPLICATION_NAME: tolua
   LUA_VERSION_NAME: luajit21
 
 jobs:
   build_windows_x64:
     runs-on: windows-latest
     env:
-      ARTIFACT_NAME: tolua-luajit21-${{github.job}}
+      ARTIFACT_NAME: ${{vars.APPLICATION_NAME}}-${{github.job}}
 
     steps:
       - name: Checkout repository
@@ -43,7 +42,7 @@ jobs:
   build_linux_x64:
     runs-on: ubuntu-22.04
     env:
-      ARTIFACT_NAME: tolua-luajit21-${{github.job}}
+      ARTIFACT_NAME: ${{vars.APPLICATION_NAME}}-${{github.job}}
 
     steps:
       - name: Checkout repository
@@ -79,14 +78,25 @@ jobs:
           name: ${{ needs.build_windows_x64.outputs.artifact_name }}
           path: output
 
+      - name: Remove windows artifact
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: ${{ needs.build_windows_x64.outputs.artifact_name }}
+
       - name: Downloads linux artifact
         uses: actions/download-artifact@v4
         with:
           name: ${{ needs.build_windows_x64.outputs.artifact_name }}
           path: output
 
+      - name: Remove linux artifact
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: ${{ needs.build_windows_x64.outputs.artifact_name }}
+
       - name: Archive Output
         uses: actions/upload-artifact@v4
         with:
-          name: ${{env.APPLICATION_NAME}}-${{env.LUA_VERSION_NAME}}
+          name: ${{vars.APPLICATION_NAME}}-${{env.LUA_VERSION_NAME}}
           path: output
+          retention-days: 2
