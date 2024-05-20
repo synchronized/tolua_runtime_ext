@@ -113,13 +113,13 @@ jobs:
       - name: Downloads linux artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ needs.build_windows_x64.outputs.artifact_name }}
+          name: ${{ needs.build_linux_x64.outputs.artifact_name }}
           path: output
 
       - name: Remove linux artifact
         uses: geekyeggo/delete-artifact@v5
         with:
-          name: ${{ needs.build_windows_x64.outputs.artifact_name }}
+          name: ${{ needs.build_linux_x64.outputs.artifact_name }}
 
       - name: Downloads android artifact
         uses: actions/download-artifact@v4
