@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
-#include <unistd.h>
+//#include <unistd.h>
 
 #define SMALL_CHUNK 256
 
@@ -343,7 +343,7 @@ lrandomkey(lua_State *L) {
 	int i;
 	char x = 0;
 	for (i=0;i<8;i++) {
-		tmp[i] = random() & 0xff;
+		tmp[i] = rand() & 0xff;
 		x ^= tmp[i];
 	}
 	if (x==0) {
@@ -965,7 +965,8 @@ luaopen_crypt(lua_State *L) {
 	if (!init) {
 		// Don't need call srandom more than once.
 		init = 1 ;
-		srandom((random() << 8) ^ (time(NULL) << 16) ^ getpid());
+		//srandom((random() << 8) ^ (time(NULL) << 16) ^ getpid());
+		srand(time(NULL)); // 修改2：srandom 不是标准的c库，所以换成 srand
 	}
 	luaL_Reg l[] = {
 		{ "hashkey", lhashkey },
